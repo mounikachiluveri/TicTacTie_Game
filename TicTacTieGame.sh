@@ -3,6 +3,7 @@ echo -e "\n Welcome to Tic-Tac-Toe game.\n"
 echo -e "Player vs Computer\n"
 row=3
 column=3
+count=1
 numberOfShell=$(($row*$column))
    function resetBoard(){
         board=( 1 2 3 4 5 6 7 8 9 )
@@ -59,7 +60,8 @@ resetBoard
 
 
          function playerInput() {
-
+                       while (( count<=$numberOfShell ))
+                       do
                          echo -e "\nPlayers 1's Turn:"
                          while ((1))
                          do
@@ -78,8 +80,8 @@ resetBoard
                          done
                                board[$shellNumber-1]=$playerSymbol
                                updatedBoard
-                           
-                                }
+                      done
+                               }
 
 playerInput
 
