@@ -43,3 +43,43 @@ resetBoard
                         fi
                   }
     toss
+
+
+          function updatedBoard() {
+
+                                 for (( columnValue=0,rowNumber=0;rowNumber<$row;columnValue=$(($columnValue+3)),rowNumber++ ))
+                                 do
+                                          echo -e "\t${board[columnValue]} | ${board[columnValue+1]} | ${board[columnValue+2]}"
+                                              if (($rowNumber!=$(($row-1))))
+                                              then
+                                                       echo -e "\t---------"
+                                              fi
+                                 done
+                                  }
+
+
+         function playerInput() {
+
+                         echo -e "\nPlayers 1's Turn:"
+                         while ((1))
+                         do
+                              read -p "Select shell number: " shellNumber
+                              if (( ($shellNumber<1) || ($shellNumber>9)))
+                              then
+                                     echo "Invalid, input 1...9"
+                              elif (($shellNumber!=${board[$shellNumber-1]}))
+                              then
+                                     echo -e "Invalid: Shell is already occupied, choose again"
+
+                              else
+                              break
+                              fi
+
+                         done
+                               board[$shellNumber-1]=$playerSymbol
+                               updatedBoard
+                           
+                                }
+
+playerInput
+
