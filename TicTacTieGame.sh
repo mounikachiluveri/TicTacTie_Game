@@ -40,7 +40,7 @@ displayBoard
                         checkToss=$((RANDOM%2))
                         if (($checkToss == 1 ))
                         then
-                            echo -e "\n Mounika plays First\n"
+                            echo -e "\n Player1 plays First\n"
                         else
                             echo -e "\nComputer plays First\n"
                         fi
