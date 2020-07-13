@@ -16,3 +16,19 @@ function displayBoard(){
                       }
 displayBoard
 
+  function assignSymbol(){
+                       assign=$((RANDOM%2))
+                       if (($assign==1))
+                       then
+                             playerSymbol='X'
+                             computerSymbol='O'
+                       else
+                             playerSymbol='O'
+                             computerSymbol='X'
+                       fi
+
+                                  echo -e "\nPlayer 1 = $playerSymbol  Computer = $computerSymbol"
+
+                          }
+  assignSymbol
+
