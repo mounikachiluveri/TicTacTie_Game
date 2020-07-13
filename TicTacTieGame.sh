@@ -16,7 +16,7 @@ function displayBoard(){
                       }
 displayBoard
 
-  function assignSymbol(){
+ function assignSymbol(){
                        assign=$((RANDOM%2))
                        if (($assign==1))
                        then
