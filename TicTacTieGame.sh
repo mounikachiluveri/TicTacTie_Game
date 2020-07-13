@@ -1,7 +1,8 @@
+#!/bin/bash -x
+echo -e "\n Welcome to Tic-Tac-Toe game.\n"
+echo -e "Player vs Computer\n"
 row=3
 column=3
-count=0
-chance=1
 numberOfShell=$(($row*$column))
 function displayBoard(){
           board=( . . . . . . . . . )
@@ -17,18 +18,28 @@ function displayBoard(){
 displayBoard
 
  function assignSymbol(){
-                       assign=$((RANDOM%2))
-                       if (($assign==1))
-                       then
-                             playerSymbol='X'
-                             computerSymbol='O'
-                       else
-                             playerSymbol='O'
-                             computerSymbol='X'
-                       fi
+                assign=$((RANDOM%2))
+                if (($assign==1))
+                then
+                      playerSymbol='X'
+                      computerSymbol='O'
+                else
+                      playerSymbol='O'
+                      computerSymbol='X'
+                fi
 
-                                  echo -e "\nPlayer 1 = $playerSymbol  Computer = $computerSymbol"
+                   echo -e "\nPlayer 1 = $playerSymbol  Computer = $computerSymbol"
 
-                          }
+  }
   assignSymbol
 
+  function toss(){
+                checkToss=$((RANDOM%2))
+                if (($checkToss == 1 ))
+                then
+                    echo -e "\n Player1 plays First\n"
+                else
+                    echo -e "\nComputer plays First\n"
+                fi
+    }
+    toss
