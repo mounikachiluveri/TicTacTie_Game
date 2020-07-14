@@ -1,8 +1,6 @@
 #!/bin/bash -x
 echo -e "\n Welcome to Tic-Tac-Toe game.\n"
 echo -e "Player vs Computer\n"
-switchPlayer=0
-count=0
 TOTAL_CELL=9
  function resettingBoard() {
         board=(. . . . . . . . . .)
