@@ -1,45 +1,62 @@
 #!/bin/bash -x
 echo -e "\n Welcome to Tic-Tac-Toe game.\n"
-echo -e "Player vs Computer\n"
-row=3
-column=3
-numberOfShell=$(($row*$column))
-function displayBoard(){
-          board=( . . . . . . . . . )
-          for (( columnValue=0,rowNumber=0;rowNumber<$row;columnValue=$(($columnValue+3)),rowNumber++ ))
-          do
-                   echo -e "\t${board[columnValue]} | ${board[columnValue+1]} | ${board[columnValue+2]}"
-                      if (($rowNumber!=$(($row-1))))
-                      then
-                           echo -e "\t---------"
-                      fi
-         done
-                      }
-displayBoard
+echo -e "Player vs Computer"
+switchPlayer=0
+ function resettingBoard() {
+        board=(. . . . . . . . . .)
+}
+
+ function displayBoard() {
+
+        echo -e "|  ${board[1]}  ||  ${board[2]}  ||  ${board[3]}  |\n---------------------\n| ${board[4]}   ||  ${board[5]}  ||  ${board[6]}  |\n---------------------\n|  ${board[7]}  ||  ${board[8]}  ||  ${board[9]}  |"
+
+}
+
 
  function assignSymbol(){
-                assign=$((RANDOM%2))
-                if (($assign==1))
-                then
-                      playerSymbol='X'
-                      computerSymbol='O'
-                else
-                      playerSymbol='O'
-                      computerSymbol='X'
-                fi
+        assign=$((RANDOM%2))
+        if (($assign==1))
+        then
+             playerLetter='X'
+             computerLetter='O'
+        else
+             playerLetter='O'
+             computerLetter='X'
+        fi
 
-                   echo -e "\nPlayer 1 = $playerSymbol  Computer = $computerSymbol"
+          echo -e "\nPlayer 1 = $playerLetter  Computer = $computerLetter"
+}
 
-  }
-  assignSymbol
+ function toss(){
+                        checkToss=$((RANDOM%2))
+                        if (($checkToss == 1 ))
+                        then
+                            echo -e "\n player plays First\n"
+                        else
+                            echo -e "\nComputer plays First\n"
+                        fi
+}
 
-  function toss(){
-                checkToss=$((RANDOM%2))
-                if (($checkToss == 1 ))
-                then
-                    echo -e "\n Player1 plays First\n"
-                else
-                    echo -e "\nComputer plays First\n"
-                fi
-    }
-    toss
+
+ function playerPlaying() {
+        echo "Player turn: "
+        read -p "Enter position between 1 to 9: " position
+        board[$position]=$playerLetter
+        displayBoard
+}
+function switchPlayer() {
+
+        if [[ $switchPlayer == 0 ]]
+        then
+                playerPlaying
+        fi
+
+}
+
+
+resettingBoard
+assignSymbol
+toss
+displayBoard
+switchPlayer
+
