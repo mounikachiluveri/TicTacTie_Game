@@ -1,87 +1,118 @@
 #!/bin/bash -x
 echo -e "\n Welcome to Tic-Tac-Toe game.\n"
 echo -e "Player vs Computer\n"
-row=3
-column=3
-count=1
-numberOfShell=$(($row*$column))
-   function resetBoard(){
-        board=( 1 2 3 4 5 6 7 8 9 )
-                 for (( columnValue=0,rowNumber=0;rowNumber<$row;columnValue=$(($columnValue+3)),rowNumber++ ))
-                 do
-                        echo -e "\t${board[columnValue]} | ${board[columnValue+1]} | ${board[columnValue+2]}"
-                          if (($rowNumber!=$(($row-1))))
-                          then
-                             echo -e "\t---------"
-                          fi
-                 done
-                    }
-resetBoard
+switchPlayer=0
+count=0
+TOTAL_CELL=9
+ function resettingBoard() {
+        board=(. . . . . . . . . .)
+}
 
-  function assignSymbol(){
-                                   assign=$((RANDOM%2))
-                                   if (($assign==1))
-                                   then
-                                           playerSymbol='X'
-                                           computerSymbol='O'
-                                   else
-                                           playerSymbol='O'
-                                           computerSymbol='X'
-                                   fi
+ function displayBoard() {
 
-                                  echo -e "\nPlayer 1 = $playerSymbol"
-                                  echo -e "Computer = $computerSymbol"
+        echo -e "****** Tic-Tac-Toe ******* \n|  ${board[1]}  ||  ${board[2]}  ||  ${board[3]}  |\n---------------------\n| ${board[4]}   ||  ${board[5]}  ||  ${board[6]}  |\n---------------------\n|  ${board[7]}  ||  ${board[8]}  ||  ${board[9]}  |"
 
-                                   }
-  assignSymbol
-  function toss(){
+}
+
+
+ function assignSymbol(){
+        assign=$((RANDOM%2))
+        if (($assign==1))
+        then
+             playerLetter='X'
+             computerLetter='O'
+        else
+             playerLetter='O'
+             computerLetter='X'
+        fi
+
+          echo -e "\nPlayer 1 = $playerLetter  Computer = $computerLetter"
+}
+
+ function toss(){
                         checkToss=$((RANDOM%2))
                         if (($checkToss == 1 ))
                         then
-                            echo -e "\n Mounika plays First\n"
+                            echo -e "\n player plays First\n"
                         else
                             echo -e "\nComputer plays First\n"
                         fi
-                  }
-    toss
+}
 
 
-          function updatedBoard() {
+ function playerPlaying() {
+        echo "Player turn: "
+        read -p "Enter position between 1 to 9: " position
+        board[$position]=$playerLetter
+        displayBoard
+}
+function switchPlayer() {
 
-                                 for (( columnValue=0,rowNumber=0;rowNumber<$row;columnValue=$(($columnValue+3)),rowNumber++ ))
-                                 do
-                                          echo -e "\t${board[columnValue]} | ${board[columnValue+1]} | ${board[columnValue+2]}"
-                                              if (($rowNumber!=$(($row-1))))
-                                              then
-                                                       echo -e "\t---------"
-                                              fi
-                                 done
-                                  }
+        if [[ $switchPlayer == 0 ]]
+        then
+                playerPlaying
+        fi
 
+}
+function checkingEmptyCell() {
+        if [[ $position -ge 1 && $position -le 9 ]]
+                then
+                        if [[ ${board[$position]} == . ]]
+                        then
+                        echo "............ $turnChange is placed at $position ............"
+                        ((count++))
+                        else
+                                echo "Cell is already occupied!!!"
+                                switchPlayer
+                        fi
+         else
+                 echo "Invalid cell value!!!"
+                 switchPlayer
+         fi
+}
 
-         function playerInput() {
-                       while (( count<=$numberOfShell ))
-                       do
-                         echo -e "\nPlayers 1's Turn:"
-                         while ((1))
-                         do
-                              read -p "Select shell number: " shellNumber
-                              if (( ($shellNumber<1) || ($shellNumber>9)))
-                              then
-                                     echo "Invalid, input 1...9"
-                              elif (($shellNumber!=${board[$shellNumber-1]}))
-                              then
-                                     echo -e "Invalid: Shell is already occupied, choose again"
+function winningCondition() {
+        for((i=1;i<=$TOTAL_CELL;i=$(($i+3))))
+        do
+                if [[ ${board[$i]} == ${board[$i+1]} && ${board[$i+1]} == ${board[$i+2]} && ${board[$i+2]} == $1 ]]
+                then
+                        winner=1
+                fi
+        done
+        for((i=1;i<=3;i++))
+        do
+                if [[ ${board[$i]} == ${board[$i+3]} && ${board[$i+3]} == ${board[$i+6]} && ${board[$i]} == $1 ]]
+                then
+                        winner=1
+                fi
+        done
+        if [[ ${board[1]}  == ${board[5]} && ${board[5]} == ${board[9]} && ${board[5]} == $1 ]]
+        then
+                winner=1
+        elif [[ ${board[3]}  == ${board[5]} && ${board[5]} == ${board[7]} && ${board[5]} == $1 ]]
+        then
+                winner=1
+        fi
+}
 
-                              else
-                              break
-                              fi
+function checkingGameStatus() {
+        if [[ $winner -eq 1 ]]
+        then
+                echo "Winner is $turnChange's"
+                exit
+        elif [[ $count -ge $TOTAL_CELL ]]
+        then
+                echo tie
+        fi
+}
 
-                         done
-                               board[$shellNumber-1]=$playerSymbol
-                               updatedBoard
-                      done
-                               }
-
-playerInput
+resettingBoard
+toss
+assignSymbol
+displayBoard
+switchPlayer
+displayBoard
+checkingEmptyCell
+winningCondition
+checkingGameStatus
 
