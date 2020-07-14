@@ -76,7 +76,7 @@ function checkingEmptyCell() {
                  switchPlayer
          fi
 }
- 
+
 function winningCondition() {
         for((start=1;$start<=$TOTAL_CELL;start=$(($start+3))))
         do
@@ -144,7 +144,6 @@ function computerPlaying() {
         switchPlayer=0
         switchPlayer
 }
-
 resettingBoard
 tossToPlay
 assignSymbol
@@ -152,3 +151,4 @@ displayBoard
 switchPlayer
 displayBoard
 checkingGameStatus
+
