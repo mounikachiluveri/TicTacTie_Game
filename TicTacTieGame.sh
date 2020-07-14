@@ -102,6 +102,7 @@ function winningCondition() {
                 winner=1
         fi
 }
+
 function computerPlayingToWin() {
         for((loop=1;loop<=$TOTAL_CELL;loop++))
         do
