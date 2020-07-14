@@ -4,82 +4,61 @@ echo -e "Player vs Computer\n"
 row=3
 column=3
 numberOfShell=$(($row*$column))
-   function resetBoard(){
-        board=( 1 2 3 4 5 6 7 8 9 )
-                 for (( columnValue=0,rowNumber=0;rowNumber<$row;columnValue=$(($columnValue+3)),rowNumber++ ))
-                 do
-                        echo -e "\t${board[columnValue]} | ${board[columnValue+1]} | ${board[columnValue+2]}"
-                          if (($rowNumber!=$(($row-1))))
-                          then
-                             echo -e "\t---------"
-                          fi
-                 done
-                    }
-resetBoard
+switchPlayer=0
+ function resettingBoard() {
+        board=(. . . . . . . . . .)
+}
 
-  function assignSymbol(){
-                                   assign=$((RANDOM%2))
-                                   if (($assign==1))
-                                   then
-                                           playerSymbol='X'
-                                           computerSymbol='O'
-                                   else
-                                           playerSymbol='O'
-                                           computerSymbol='X'
-                                   fi
+ function displayBoard() {
 
-                                  echo -e "\nPlayer 1 = $playerSymbol"
-                                  echo -e "Computer = $computerSymbol"
+        echo -e "|  ${board[1]}  ||  ${board[2]}  ||  ${board[3]}  |\n---------------------\n| ${board[4]}   ||  ${board[5]}  ||  ${board[6]}  |\n---------------------\n|  ${board[7]}  ||  ${board[8]}  ||  ${board[9]}  |"
 
-                                   }
-  assignSymbol
-  function toss(){
+}
+
+
+ function assignSymbol(){
+        assign=$((RANDOM%2))
+        if (($assign==1))
+        then
+             playerLetter='X'
+             computerLetter='O'
+        else
+             playerLetter='O'
+             computerLetter='X'
+        fi
+
+          echo -e "\nPlayer 1 = $playerLetter  Computer = $computerLetter"
+}
+
+ function toss(){
                         checkToss=$((RANDOM%2))
                         if (($checkToss == 1 ))
                         then
-                            echo -e "\n Mounika plays First\n"
+                            echo -e "\n player plays First\n"
                         else
                             echo -e "\nComputer plays First\n"
                         fi
-                  }
-    toss
+}
 
 
-          function updatedBoard() {
+ function playerPlaying() {
+        echo "Player turn: "
+        read -p "Enter position between 1 to 9: " position
+        board[$position]=$playerLetter
+        displayBoard
+}
+function switchPlayer() {
 
-                                 for (( columnValue=0,rowNumber=0;rowNumber<$row;columnValue=$(($columnValue+3)),rowNumber++ ))
-                                 do
-                                          echo -e "\t${board[columnValue]} | ${board[columnValue+1]} | ${board[columnValue+2]}"
-                                              if (($rowNumber!=$(($row-1))))
-                                              then
-                                                       echo -e "\t---------"
-                                              fi
-                                 done
-                                  }
+        if [[ $switchPlayer == 0 ]]
+        then
+                playerPlaying
+        fi
+
+}
 
 
-         function playerInput() {
-
-                         echo -e "\nPlayers 1's Turn:"
-                         while ((1))
-                         do
-                              read -p "Select shell number: " shellNumber
-                              if (( ($shellNumber<1) || ($shellNumber>9)))
-                              then
-                                     echo "Invalid, input 1...9"
-                              elif (($shellNumber!=${board[$shellNumber-1]}))
-                              then
-                                     echo -e "Invalid: Shell is already occupied, choose again"
-
-                              else
-                              break
-                              fi
-
-                         done
-                               board[$shellNumber-1]=$playerSymbol
-                               updatedBoard
-                           
-                                }
-
-playerInput
-
+resettingBoard
+assignSymbol
+toss
+displayBoard
+switchPlayer
