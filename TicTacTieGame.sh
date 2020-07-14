@@ -4,6 +4,19 @@ echo -e "Player vs Computer\n"
 switchPlayer=0
 count=0
 TOTAL_CELL=9
+function empty() {
+        index=0
+        for((i=1;i<=9;i++)){
+            if [[ ${board[$i]} == . ]]
+            then
+                 emptyCells[$index]=$i
+                let index++
+            fi
+        }
+}
+
+
+
  function resettingBoard() {
         board=(. . . . . . . . . .)
 }
@@ -14,8 +27,7 @@ TOTAL_CELL=9
 
 }
 
-
- function assignSymbol(){
+function assignSymbol(){
         assign=$((RANDOM%2))
         if (($assign==1))
         then
@@ -29,31 +41,33 @@ TOTAL_CELL=9
           echo -e "\nPlayer 1 = $playerLetter  Computer = $computerLetter"
 }
 
- function toss(){
-                        checkToss=$((RANDOM%2))
-                        if (($checkToss == 1 ))
-                        then
-                            echo -e "\n player plays First\n"
-                        else
-                            echo -e "\nComputer plays First\n"
-                        fi
+ function tossToPlay() {
+        if [ $((RANDOM%2)) -eq 0 ]
+        then
+                echo "Player will play first."
+        else
+                echo "Computer will play first."
+        fi
 }
 
-
- function playerPlaying() {
-        echo "Player turn: "
-        read -p "Enter position between 1 to 9: " position
-        board[$position]=$playerLetter
-        displayBoard
-}
 function switchPlayer() {
-
+        echo "player letter : $playerLetter"
+        echo "computer letter : $computerLetter"
         if [[ $switchPlayer == 0 ]]
         then
                 playerPlaying
+        else
+                computerPlaying
         fi
 
 }
+
+function playerPlaying() {
+        read -p "Enter position between 1 to 9: " position
+        board[$position]=$playerLetter
+        switchPlayer=1
+}
+
 function checkingEmptyCell() {
         if [[ $position -ge 1 && $position -le 9 ]]
                 then
@@ -74,45 +88,40 @@ function checkingEmptyCell() {
 function winningCondition() {
         for((i=1;i<=$TOTAL_CELL;i=$(($i+3))))
         do
-                if [[ ${board[$i]} == ${board[$i+1]} && ${board[$i+1]} == ${board[$i+2]} && ${board[$i+2]} == $computerLetter ]]
+                if [[ ${board[$i]} == ${board[$i+1]} && ${board[$i+1]} == ${board[$i+2]} && ${board[$i+2]} == $1 ]]
                 then
                         winner=1
                 fi
         done
         for((i=1;i<=3;i++))
         do
-                if [[ ${board[$i]} == ${board[$i+3]} && ${board[$i+3]} == ${board[$i+6]} && ${board[$i]} == $computerLetter ]]
+                if [[ ${board[$i]} == ${board[$i+3]} && ${board[$i+3]} == ${board[$i+6]} && ${board[$i]} == $1 ]]
                 then
                         winner=1
                 fi
         done
-        if [[ ${board[1]}  == ${board[5]} && ${board[5]} == ${board[9]} && ${board[5]} == $computerLetter ]]
+        if [[ ${board[1]}  == ${board[5]} && ${board[5]} == ${board[9]} && ${board[5]} == $1 ]]
         then
                 winner=1
-        elif [[ ${board[3]}  == ${board[5]} && ${board[5]} == ${board[7]} && ${board[5]} == $computerLetter ]]
+        elif [[ ${board[3]}  == ${board[5]} && ${board[5]} == ${board[7]} && ${board[5]} == $1 ]]
         then
                 winner=1
         fi
 }
-
 function checkingGameStatus() {
         if [[ $winner -eq 1 ]]
         then
-                echo "Winner "
+                echo "Winner"
                 exit
         elif [[ $count -ge $TOTAL_CELL ]]
         then
                 echo tie
         fi
 }
-
 resettingBoard
-toss
+tossToPlay
 assignSymbol
 displayBoard
 switchPlayer
 displayBoard
-checkingEmptyCell
-winningCondition
 checkingGameStatus
-
