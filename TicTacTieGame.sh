@@ -72,24 +72,24 @@ function checkingEmptyCell() {
 }
 
 function winningCondition() {
-        for((i=1;i<=$TOTAL_CELL;i=$(($i+3))))
+        for((start=1;start<=$TOTAL_CELL;start=$(($start+3))))
         do
-                if [[ ${board[$i]} == ${board[$i+1]} && ${board[$i+1]} == ${board[$i+2]} && ${board[$i+2]} == $1 ]]
+                if [[ ${board[$start]} == ${board[$start+1]} && ${board[$start+1]} == ${board[$start+2]} && ${board[$start+2]} == $computerLetter ]]
                 then
                         winner=1
                 fi
         done
         for((i=1;i<=3;i++))
         do
-                if [[ ${board[$i]} == ${board[$i+3]} && ${board[$i+3]} == ${board[$i+6]} && ${board[$i]} == $1 ]]
+                if [[ ${board[$start]} == ${board[$start+3]} && ${board[$start+3]} == ${board[$start+6]} && ${board[$start]} == $computerLetter ]]
                 then
                         winner=1
                 fi
         done
-        if [[ ${board[1]}  == ${board[5]} && ${board[5]} == ${board[9]} && ${board[5]} == $1 ]]
+        if [[ ${board[1]}  == ${board[5]} && ${board[5]} == ${board[9]} && ${board[5]} == $computerLetter ]]
         then
                 winner=1
-        elif [[ ${board[3]}  == ${board[5]} && ${board[5]} == ${board[7]} && ${board[5]} == $1 ]]
+        elif [[ ${board[3]}  == ${board[5]} && ${board[5]} == ${board[7]} && ${board[5]} == $computerLetter ]]
         then
                 winner=1
         fi
@@ -98,7 +98,7 @@ function winningCondition() {
 function checkingGameStatus() {
         if [[ $winner -eq 1 ]]
         then
-                echo "Winner is $turnChange's"
+                echo "Winner"
                 exit
         elif [[ $count -ge $TOTAL_CELL ]]
         then
