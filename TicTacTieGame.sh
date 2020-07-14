@@ -1,9 +1,6 @@
 #!/bin/bash -x
 echo -e "\n Welcome to Tic-Tac-Toe game.\n"
 echo -e "Player vs Computer\n"
-row=3
-column=3
-numberOfShell=$(($row*$column))
 switchPlayer=0
  function resettingBoard() {
         board=(. . . . . . . . . .)
